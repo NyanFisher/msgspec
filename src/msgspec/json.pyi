@@ -1,3 +1,4 @@
+import decimal
 from collections.abc import Callable, Iterable
 from types import GenericAlias
 from typing import (
@@ -7,6 +8,7 @@ from typing import (
     Type,
     TypeAlias,
     TypeVar,
+    Union,
     final,
     overload,
 )
@@ -23,7 +25,10 @@ _SchemaHookSig: TypeAlias = Callable[[type], dict[str, Any]] | None
 @final
 class Encoder:
     enc_hook: _EncHookSig
-    decimal_format: Literal["string", "number"]
+    decimal_format: Union[
+        Literal["string", "number"],
+        Callable[[decimal.Decimal], Union[str, float]],
+    ]
     uuid_format: Literal["canonical", "hex"]
     order: Literal["deterministic", "sorted"] | None
 
@@ -31,7 +36,10 @@ class Encoder:
         self,
         *,
         enc_hook: _EncHookSig = None,
-        decimal_format: Literal["string", "number"] = "string",
+        decimal_format: Union[
+            Literal["string", "number"],
+            Callable[[decimal.Decimal], Union[str, float]],
+        ] = "string",
         uuid_format: Literal["canonical", "hex"] = "canonical",
         order: Literal["deterministic", "sorted"] | None = None,
     ): ...
