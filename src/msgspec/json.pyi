@@ -8,7 +8,6 @@ from typing import (
     Type,
     TypeAlias,
     TypeVar,
-    Union,
     final,
     overload,
 )
@@ -25,10 +24,7 @@ _SchemaHookSig: TypeAlias = Callable[[type], dict[str, Any]] | None
 @final
 class Encoder:
     enc_hook: _EncHookSig
-    decimal_format: Union[
-        Literal["string", "number"],
-        Callable[[decimal.Decimal], Any],
-    ]
+    decimal_format: Literal["string", "number"] | Callable[[decimal.Decimal], Any]
     uuid_format: Literal["canonical", "hex"]
     order: Literal["deterministic", "sorted"] | None
 
@@ -36,10 +32,8 @@ class Encoder:
         self,
         *,
         enc_hook: _EncHookSig = None,
-        decimal_format: Union[
-            Literal["string", "number"],
-            Callable[[decimal.Decimal], Any],
-        ] = "string",
+        decimal_format: Literal["string", "number"]
+        | Callable[[decimal.Decimal], Any] = "string",
         uuid_format: Literal["canonical", "hex"] = "canonical",
         order: Literal["deterministic", "sorted"] | None = None,
     ): ...

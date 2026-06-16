@@ -8,7 +8,6 @@ from typing import (
     Type,
     TypeAlias,
     TypeVar,
-    Union,
     final,
     overload,
 )
@@ -57,20 +56,15 @@ class Decoder(Generic[_T]):
 @final
 class Encoder:
     enc_hook: _EncHookSig
-    decimal_format: Union[
-        Literal["string", "number"],
-        Callable[[decimal.Decimal], Any],
-    ]
+    decimal_format: Literal["string", "number"] | Callable[[decimal.Decimal], Any]
     uuid_format: Literal["canonical", "hex", "bytes"]
     order: Literal["deterministic", "sorted"] | None
     def __init__(
         self,
         *,
         enc_hook: _EncHookSig = None,
-        decimal_format: Union[
-            Literal["string", "number"],
-            Callable[[decimal.Decimal], Any],
-        ] = "string",
+        decimal_format: Literal["string", "number"]
+        | Callable[[decimal.Decimal], Any] = "string",
         uuid_format: Literal["canonical", "hex", "bytes"] = "canonical",
         order: Literal["deterministic", "sorted"] | None = None,
     ) -> None: ...

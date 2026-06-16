@@ -699,7 +699,7 @@ def check_msgpack_Encoder_decimal_format() -> None:
     enc = msgspec.msgpack.Encoder(decimal_format="string")
     msgspec.msgpack.Encoder(decimal_format="number")
     msgspec.msgpack.Encoder(decimal_format=lambda x: str(x))
-    assert_type(enc.decimal_format, Literal['string', 'number'] | Callable[[decimal.Decimal], str | float])
+    assert_type(enc.decimal_format, Literal['string', 'number'] | Callable[[decimal.Decimal], Any])
 
 
 
@@ -889,7 +889,7 @@ def check_json_Encoder_decimal_format() -> None:
     enc = msgspec.json.Encoder(decimal_format="string")
     msgspec.json.Encoder(decimal_format="number")
     msgspec.json.Encoder(decimal_format=lambda x: str(x))
-    assert_type(enc.decimal_format, Literal['string', 'number'] | Callable[[decimal.Decimal], str | float])
+    assert_type(enc.decimal_format, Literal['string', 'number'] | Callable[[decimal.Decimal], Any])
 
 
 def check_json_Encoder_uuid_format() -> None:

@@ -4779,7 +4779,7 @@ class TestDecimal:
     def test_encoder_decimal_callable_convert_value_to_string(
         self, proto, value, expected
     ):
-        enc = msgspec.json.Encoder(
+        enc = proto.Encoder(
             decimal_format=lambda d: str(d.quantize(decimal.Decimal("0.000")))
         )
         msg = enc.encode(value)
@@ -4800,7 +4800,7 @@ class TestDecimal:
     def test_encoder_decimal_callable_convert_value_into_different_types(
         self, proto, fn, expected
     ):
-        enc = msgspec.json.Encoder(decimal_format=lambda d: fn(d))
+        enc = proto.Encoder(decimal_format=lambda d: fn(d))
         msg = enc.encode(decimal.Decimal("1.21"))
         assert msg == enc.encode(expected)
 
